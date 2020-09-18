@@ -10,9 +10,10 @@ char x;
 for (x = '1'; x <= '9'; x++)
 {
 putchar (x);
+if (x != '9')
 putchar (44);
 putchar (32);
-}		  
+}
 {
 putchar ('\n');
 }
