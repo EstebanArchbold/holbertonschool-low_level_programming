@@ -1,7 +1,7 @@
 #include "holberton.h"
 
 /**
- * *_strncat - copies string src to buffer pointed to by dest
+ * *_strncpy - copies string src to buffer pointed to by dest
  * @dest: string pointer
  * @src: buffer pointer
  * @n: entry point
