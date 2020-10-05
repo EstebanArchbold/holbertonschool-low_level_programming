@@ -1,8 +1,9 @@
 #include "holberton.h"
 /**
- *
- *
- *
+ * _strspn - compare characters from one string to the other one
+ *@s: entry point
+ *@accept: point of entry
+ *Return: the value of the numbers of characters compare
  */
 unsigned int _strspn(char *s, char *accept)
 {
@@ -22,10 +23,6 @@ unsigned int _strspn(char *s, char *accept)
 		{
 			break;
 }
-
-			}						
- 
-		   	
-	return (n);
+			}
+return (n);
 }
-
