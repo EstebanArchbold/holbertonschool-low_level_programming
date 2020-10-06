@@ -1,7 +1,7 @@
 #include "holberton.h"
 #include <stddef.h>
 /**
- * _strpbkr - compare characters from one string to the other one
+ *_strpbrk - compare characters from one string to the other one
  *@s: entry point
  *@accept: point of entry
  *Return: the value of the numbers of characters compare
