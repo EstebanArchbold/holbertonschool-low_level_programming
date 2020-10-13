@@ -1,8 +1,9 @@
 #include <stdio.h>
 /**
- *@argv: argument value
- *@argc: argument count
- *@Return: 0
+ *main - entry point
+ *@argc: argument value print what the word say
+ *@argv: argument count
+ *Return: zero
  *
  */
 int main(int argc, char *argv[])
