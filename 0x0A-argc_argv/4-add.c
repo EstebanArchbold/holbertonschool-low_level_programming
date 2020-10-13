@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 /**
- *main - entry point
- *@argc: argument value print what the word say
- *@argv: argument count
- *Return: zero
- *
+ *numchecker - verifies that the string has only numbers
+ *@s: string to verify
+ *Description: 1 if only numbers, 0 if not
+ *Return: 1 if only numbers, otherwise return 0
  */
+
 int numchecker(char *s)
 {
 	int i;
