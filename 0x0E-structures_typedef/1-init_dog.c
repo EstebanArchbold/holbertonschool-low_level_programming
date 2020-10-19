@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 /**
- *
- *
- *
+ * init_dog - dog information
+ *@d: pointer directioner
+ *@name: name of the dog
+ *@age: how old is he or she
+ *@owner: who belong
  */
 void init_dog(struct dog *d, char *name, float age, char *owner)
 {
@@ -12,9 +14,10 @@ void init_dog(struct dog *d, char *name, float age, char *owner)
 	{
 		return;
 }
-	else {
-		d-> name = name;
-		d-> age = age;
-		d-> owner = owner;
+	else
+{
+		d->name = name;
+		d->age = age;
+		d->owner = owner;
 }
 }
