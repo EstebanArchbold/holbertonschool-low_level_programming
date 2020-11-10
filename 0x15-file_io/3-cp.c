@@ -1,76 +1,86 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
 #include "holberton.h"
+
 /**
- * cp_file_content - function that copies content of a file src to dest file
- * @src: file from content will be copied
- * @dest: file where the content will be pasted
- * Return: 0
+ * close_args - closes open files.
+ *
+ * @fd: file descriptor for open.
+ * @fdwr:  file descriptor for write.
+ *
  */
-int cp_file_content(const char *src, char *dest)
+
+void close_args(int fd, int fdwr)
 {
-	ssize_t fd_src = open(src, O_RDONLY);
-	ssize_t fd_dest = open(dest, O_WRONLY | O_TRUNC);
-	ssize_t read_src = 0;
-	char *buff = malloc(sizeof(char) * (1024));
+	int close1, close2;
 
-	if (fd_src == -1)
+	close1 = close(fd);
+	if (close1 == -1)
 	{
-		char *err_1 = "Error: Can't read from file NAME_OF_THE_FILE\n";
-		int size_1 = _strlen(err_1);
-
-		write(STDERR_FILENO, err_1, size_1);
-		exit(98);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %i\n", close1);
+		exit(100);
 	}
-	read_src = read(fd_src, buff, 1024);
-	if (read_src == -1)
+	close2 = close(fdwr);
+	if (close2 == -1)
 	{
-		char *err_2 = "Error: Can't read from file NAME_OF_THE_FILE";
-		int size_2 = _strlen(err_2);
-
-		write(STDERR_FILENO, err_2, size_2);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %i\n", close2);
+		exit(100);
 	}
-	write(fd_dest, buff, 1024);
-	close(fd_src);
-	close(fd_dest);
-	return (0);
 }
+
 /**
- * main - man function
- * @argc: amount of parameters
- * @argv: pointer to each parameter
- * Return: 0.
+ * main - copies the content of a file to another file.
+ *
+ * @argc: args qtty.
+ * @argv: args value.
+ *
+ * Return: 0 on success.
  */
 int main(int argc, char *argv[])
 {
-	char *serr1 = "Usage: cp file_from file_to\n";
-	int size = _strlen(serr1);
+	int fd = 0, count, fdwr = 0;
+	char *buf;
 
-	if (argc != 3)
+	if (argc == 3)
 	{
-		write(STDERR_FILENO, serr1, size);
+		buf = malloc(1024);
+		if (buf == NULL)
+			return (0);
+		fd = open(argv[1], O_RDWR);
+		if (fd == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			exit(98);
+		}
+		fdwr = open(argv[2], O_CREAT | O_RDWR | O_APPEND | O_TRUNC, S_IRUSR | S_IWUSR
+			    | S_IRGRP | S_IWGRP | S_IROTH);
+		if (fdwr == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
+			exit(99);
+		}
+
+		while ((count = read(fd, buf, 1024)) != 0)
+		{
+			count = write(fdwr, buf, count);
+			if (count == -1)
+			{
+				dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
+				exit(99);
+			}
+		}
+		free(buf);
+		close_args(fd, fdwr);
+	}
+	else
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-	cp_file_content(argv[1], argv[2]);
 	return (0);
-}
-/**
- * _strlen - check the code for Holberton School students.
- * @s: pointer to holberton
- * Return: Always n.
- */
-int _strlen(char *s)
-{
-	int n;
-
-	n = 0;
-
-	while (*s != '\0')
-	{
-		n++;
-		s++;
-	}
-	return (n);
 }
